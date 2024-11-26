@@ -34,7 +34,6 @@ NeoBundleCheck
 "
 
 " Setup git-path with the associated env
-" let s:vim_py_plugin_path = expand('~/git_rep/my-vim-py-plugin/.venv/bin/python3')
 let g:vim_setup_path = expand('%:p:h')
 let $PYTHONPATH = g:vim_setup_path . ':' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
 let g:python3_host_prog = g:vim_setup_path . "/.venv/bin/python3"
@@ -46,11 +45,10 @@ lua require('comment-setup')
 "lua require('venv-setup')
 "lua require('color-setup')
 
+"Usefull to test installed themes"
 let s:themes = ['gruvbox', 'tokyonight', 'catppuccin', 'onedark', 'nord', 'everforest']
 let g:current_theme = 0
-
 command! CycleColorscheme call s:CycleColors()
-
 function! s:CycleColors()
   let g:current_theme = (g:current_theme + 1) % len(s:themes)
   execute 'colorscheme ' . s:themes[g:current_theme]
