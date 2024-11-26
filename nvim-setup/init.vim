@@ -34,16 +34,17 @@ NeoBundleCheck
 "
 
 " Setup git-path with the associated env
-let s:vim_py_plugin_path = expand('~/git_rep/my-vim-py-plugin/')
-let $PYTHONPATH = s:vim_py_plugin_path . ':' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
-let g:python3_host_prog = s:vim_py_plugin_path . ".venv/bin/python3"
+" let s:vim_py_plugin_path = expand('~/git_rep/my-vim-py-plugin/.venv/bin/python3')
+let g:vim_setup_path = expand('%:p:h')
+let $PYTHONPATH = g:vim_setup_path . ':' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
+let g:python3_host_prog = g:vim_setup_path . "/.venv/bin/python3"
 
 " Import lua setup
 lua require('cmp-setup')
 lua require('mason-setup')
 lua require('comment-setup')
-lua require('venv-setup')
-lua require('color-setup')
+"lua require('venv-setup')
+"lua require('color-setup')
 
 let s:themes = ['gruvbox', 'tokyonight', 'catppuccin', 'onedark', 'nord', 'everforest']
 let g:current_theme = 0

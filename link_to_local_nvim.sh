@@ -21,3 +21,8 @@ else
   ln -sv "$SCRIPT_PATH/nvim-setup/lua" ~/.config/nvim/lua
 fi
 
+if [ -e ~/.config/nvim/.venv  ]; then
+  echo "~/.config/nvim/.venv already exists."
+else
+  ln -sv "$SCRIPT_PATH/.venv" ~/.config/nvim/.venv
+fi
