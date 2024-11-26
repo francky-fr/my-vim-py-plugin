@@ -2,27 +2,34 @@
 
 set -e
 
+NVIM_CONFIG_PATH="$HOME/.config/nvim"
 SCRIPT_PATH=$(dirname "$(realpath "$0")")
 
-if [ ! -d ~/.config/nvim ]; then
-  echo "Error: ~/.config/nvim does not exist or is not a directory."
+if [ ! -d $NVIM_CONFIG_PATH ]; then
+  echo "Error: $NVIM_CONFIG_PATH does not exist or is not a directory."
   exit 1
 fi
 
-if [ ! -e ~/.config/nvim/init.vim  ]; then
-  ln -sv "$SCRIPT_PATH/nvim-setup/init.vim" ~/.config/nvim/init.vim
-else
-  echo "~/.config/nvim/init.vim already exists."
-fi
+create_symlink_nvim_setup() {
+  local file_or_dir=$1
+  if [ -e "$NVIM_CONFIG_PATH/$file_or_dir" ]; then
+    echo "$NVIM_CONFIG_PATH/$file_or_dir already exists."
+  else
+    ln -sv "$SCRIPT_PATH/nvim-setup/$file_or_dir" "$NVIM_CONFIG_PATH/$file_or_dir"
+  fi
+}
 
-if [ -e ~/.config/nvim/lua  ]; then
-  echo "~/.config/nvim/lua already exists."
-else
-  ln -sv "$SCRIPT_PATH/nvim-setup/lua" ~/.config/nvim/lua
-fi
+create_symlink_root_git() {
+  local file_or_dir=$1
+  if [ -e "$NVIM_CONFIG_PATH/$file_or_dir" ]; then
+    echo "$NVIM_CONFIG_PATH/$file_or_dir already exists."
+  else
+    ln -sv "$SCRIPT_PATH/$file_or_dir" "$NVIM_CONFIG_PATH/$file_or_dir"
+  fi
+}
 
-if [ -e ~/.config/nvim/.venv  ]; then
-  echo "~/.config/nvim/.venv already exists."
-else
-  ln -sv "$SCRIPT_PATH/.venv" ~/.config/nvim/.venv
-fi
+create_symlink_nvim_setup "init.vim"
+create_symlink_nvim_setup "lua"
+create_symlink_root_git ".venv"
+create_symlink_root_git "py"
+

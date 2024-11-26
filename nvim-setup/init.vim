@@ -35,7 +35,7 @@ NeoBundleCheck
 
 " Setup git-path with the associated env
 let g:vim_setup_path = expand('%:p:h')
-let $PYTHONPATH = g:vim_setup_path . ':' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
+let $PYTHONPATH = g:vim_setup_path . '/py:' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
 let g:python3_host_prog = g:vim_setup_path . "/.venv/bin/python3"
 
 " Import lua setup
