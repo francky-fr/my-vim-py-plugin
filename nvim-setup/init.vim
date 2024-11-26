@@ -42,8 +42,8 @@ let g:python3_host_prog = g:vim_setup_path . "/.venv/bin/python3"
 lua require('cmp-setup')
 lua require('mason-setup')
 lua require('comment-setup')
-"lua require('venv-setup')
-"lua require('color-setup')
+lua require('venv-setup')
+lua require('color-setup')
 
 "Usefull to test installed themes"
 let s:themes = ['gruvbox', 'tokyonight', 'catppuccin', 'onedark', 'nord', 'everforest']
