@@ -30,11 +30,8 @@ call neobundle#add('nvim-treesitter/nvim-treesitter')
 call neobundle#end()
 NeoBundleCheck
 
-" set background=light
-"
-
-" Setup git-path with the associated env
-let g:vim_setup_path = expand('%:p:h')
+" Setup git-path with the associated python env
+let g:vim_setup_path = stdpath('config') 
 let $PYTHONPATH = g:vim_setup_path . '/py:' . (exists('$PYTHONPATH') ? $PYTHONPATH : '')
 let g:python3_host_prog = g:vim_setup_path . "/.venv/bin/python3"
 
@@ -44,6 +41,7 @@ lua require('mason-setup')
 lua require('comment-setup')
 lua require('venv-setup')
 lua require('color-setup')
+lua require('dadbod-setup')
 
 "Usefull to test installed themes"
 let s:themes = ['gruvbox', 'tokyonight', 'catppuccin', 'onedark', 'nord', 'everforest']
