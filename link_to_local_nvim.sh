@@ -12,10 +12,14 @@ fi
 
 create_symlink_nvim_setup() {
   local file_or_dir=$1
-  if [ -e "$NVIM_CONFIG_PATH/$file_or_dir" ]; then
-    echo "$NVIM_CONFIG_PATH/$file_or_dir already exists."
+  if [ -e "$SCRIPT_PATH/nvim-setup/$file_or_dir" ]; then
+	  if [ -e "$NVIM_CONFIG_PATH/$file_or_dir" ]; then
+	    echo "$NVIM_CONFIG_PATH/$file_or_dir already exists."
+	  else
+	    ln -sv "$SCRIPT_PATH/nvim-setup/$file_or_dir" "$NVIM_CONFIG_PATH/$file_or_dir"
+	  fi
   else
-    ln -sv "$SCRIPT_PATH/nvim-setup/$file_or_dir" "$NVIM_CONFIG_PATH/$file_or_dir"
+    echo "$SCRIPT_PATH/nvim-setup/$file_or_dir not in repo : ignoring it"
   fi
 }
 
@@ -28,7 +32,10 @@ create_symlink_root_git() {
   fi
 }
 
+create_symlink_nvim_setup "init.bak.vim"
 create_symlink_nvim_setup "init.vim"
+create_symlink_nvim_setup "post-lua-init.vim"
+create_symlink_nvim_setup "init.lua"
 create_symlink_nvim_setup "lua"
 create_symlink_root_git ".venv"
 create_symlink_root_git "py"
