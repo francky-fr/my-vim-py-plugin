@@ -41,21 +41,23 @@ require("lazy").setup({
     "nvim-lua/plenary.nvim",
 
     -- Colorschemes
-    "ellisonleao/gruvbox.nvim",
     "folke/tokyonight.nvim",
-    "navarasu/onedark.nvim",
-    { "catppuccin/nvim", name = "catppuccin" },
-    "shaunsingh/nord.nvim",
-    "sainnhe/everforest",
+    -- "ellisonleao/gruvbox.nvim",
+    -- "navarasu/onedark.nvim",
+    -- { "catppuccin/nvim", name = "catppuccin" },
+    -- "shaunsingh/nord.nvim",
+    -- "sainnhe/everforest",
 
     -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
+    -- {
+    --     "nvim-treesitter/nvim-treesitter",
+    --     build = ":TSUpdate",
+    -- },
 
     -- Lazy.nvim (if you want to keep it for managing itself)
-    "folke/lazy.nvim",
+    --"folke/lazy.nvim",
+
+    "dstein64/vim-startuptime"
 })
 
 -- Setup git-path with the associated Python environment
