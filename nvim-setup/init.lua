@@ -85,12 +85,4 @@ require('comment-setup')
 require('venv-setup')
 require('color-setup')
 
--- vim.opt.mouse = "nv"
--- vim.cmd('source ~/.config/nvim/post-lua-init.vim')
-vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-        vim.opt.mouse = "nv" -- Set mouse option after Neovim startup
-	vim.opt.mousemodel = "extend"
-    end,
-})
-
+vim.opt.mouse = "a"
