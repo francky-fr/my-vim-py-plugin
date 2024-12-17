@@ -15,11 +15,24 @@ require("lazy").setup({
     -- Fix JSON
     { "rhysd/vim-fixjson", ft = { "json" } },
     { "pseewald/vim-anyfold", ft = { "json" } },
-    
-    -- Vim-dadbod plugins
-    "tpope/vim-dadbod",
-    "kristijanhusak/vim-dadbod-ui",
-    "kristijanhusak/vim-dadbod-completion",
+
+    {
+	    "kristijanhusak/vim-dadbod-ui",
+	    cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
+	    dependencies = {
+		    {
+			    "tpope/vim-dadbod",
+			    lazy = true,
+		    },
+		    {
+			    "kristijanhusak/vim-dadbod-completion",
+			    lazy = true,
+		    },
+	    },
+	    config = function()
+		    require("dadbod-setup")
+	    end,
+    },
 
     -- LSP and completion
     "neovim/nvim-lspconfig",
@@ -71,7 +84,13 @@ require('mason-setup')
 require('comment-setup')
 require('venv-setup')
 require('color-setup')
-require('dadbod-setup')
 
+-- vim.opt.mouse = "nv"
+-- vim.cmd('source ~/.config/nvim/post-lua-init.vim')
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.opt.mouse = "nv" -- Set mouse option after Neovim startup
+	vim.opt.mousemodel = "extend"
+    end,
+})
 
-vim.cmd('source ~/.config/nvim/post-lua-init.vim')
