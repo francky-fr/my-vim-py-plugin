@@ -15,7 +15,6 @@ local function wilson_dev_url()
         5439,
         "dev"
     ))
-    vim.print(ret)
     return ret
 end
 
@@ -27,4 +26,19 @@ vim.g.dbs = {
         end
     }
 }
+
+vim.g.db_ui_save_location = "~/queries/"
+
+local opts = { noremap = true, silent = true }
+
+function new_saved_query()
+  local db_name = vim.fn['db#ui#get_selected_connection']() or "default"
+  local datetime = os.date("%Y-%m-%d_%H-%M-%S")
+  local file_path = string.format("%s/%s/%s.sql", vim.g.db_ui_save_location, db_name, datetime)
+  vim.cmd("e " .. file_path)
+end
+vim.api.nvim_set_keymap('n', '<leader>n', ':lua new_saved_query()<CR>', opts)
+
+vim.keymap.set("n", "<C-r>", ":Lazy reload vim-dadbod-ui<CR>", { noremap = true, silent = true, desc = "Reload vim-dadbod-ui" })
+
 

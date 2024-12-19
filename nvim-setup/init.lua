@@ -86,3 +86,26 @@ require('venv-setup')
 require('color-setup')
 
 vim.opt.mouse = "a"
+vim.g.mapleader = " "
+
+-- Leader key mappings in Lua
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+map('n', '<leader>q', ':q<CR>', opts)
+map('n', '<leader>e', '<Plug>(DBUI_ExecuteQuery)', opts)
+map('n', '<leader>k', '<Plug>(DBUI_KillQuery)', opts)
+
+
+-- function ReloadConfig()
+--     for name,_ in pairs(package.loaded) do
+--         if name:match("^config") or name:match("^lazy") then
+--             package.loaded[name] = nil
+--         end
+--     end
+--     -- Reload lazy.nvim and your configuration
+--     require("lazy").reload()
+--     dofile(vim.env.MYVIMRC)
+--     print("Configuration reloaded!")
+-- end
+--
