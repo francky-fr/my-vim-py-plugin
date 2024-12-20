@@ -93,8 +93,8 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 map('n', '<leader>q', ':q<CR>', opts)
-map('n', '<leader>e', '<Plug>(DBUI_ExecuteQuery)', opts)
-map('n', '<leader>k', '<Plug>(DBUI_KillQuery)', opts)
+-- map('n', '<leader>e', '<Plug>(DBUI_ExecuteQuery)', opts)
+-- map('n', '<leader>k', '<Plug>(DBUI_KillQuery)', opts)
 
 
 -- function ReloadConfig()
