@@ -12,10 +12,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+
     -- Fix JSON
     { "rhysd/vim-fixjson", ft = { "json" } },
     { "pseewald/vim-anyfold", ft = { "json" } },
 
+    -- Dadbod
     {
 	    "kristijanhusak/vim-dadbod-ui",
 	    cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
@@ -60,15 +62,14 @@ require("lazy").setup({
     -- { "catppuccin/nvim", name = "catppuccin" },
     -- "shaunsingh/nord.nvim",
     -- "sainnhe/everforest",
-
+    
     -- Treesitter
-    -- {
-    --     "nvim-treesitter/nvim-treesitter",
-    --     build = ":TSUpdate",
-    -- },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+    },
 
-    -- Lazy.nvim (if you want to keep it for managing itself)
-    --"folke/lazy.nvim",
+    "folke/lazy.nvim",
 
     "dstein64/vim-startuptime"
 })
@@ -84,6 +85,7 @@ require('mason-setup')
 require('comment-setup')
 require('venv-setup')
 require('color-setup')
+require('my-smart-move')
 
 vim.opt.mouse = "a"
 vim.g.mapleader = " "
@@ -93,19 +95,3 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 map('n', '<leader>q', ':q<CR>', opts)
--- map('n', '<leader>e', '<Plug>(DBUI_ExecuteQuery)', opts)
--- map('n', '<leader>k', '<Plug>(DBUI_KillQuery)', opts)
-
-
--- function ReloadConfig()
---     for name,_ in pairs(package.loaded) do
---         if name:match("^config") or name:match("^lazy") then
---             package.loaded[name] = nil
---         end
---     end
---     -- Reload lazy.nvim and your configuration
---     require("lazy").reload()
---     dofile(vim.env.MYVIMRC)
---     print("Configuration reloaded!")
--- end
---
