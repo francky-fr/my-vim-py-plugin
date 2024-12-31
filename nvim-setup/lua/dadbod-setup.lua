@@ -3,10 +3,12 @@ py3 << EOF
 import dadbod
 def vim_get_connection_str(region, host, workgroup, port, db):
     return dadbod.get_iam_connection_str(region, host, workgroup, port, db)
+def vim_get_connection_str_from_sm(region, sm_path):
+    return dadbod.get_iam_connection_str_from_sm(region, sm_path)
 EOF
 ]])
 
-local function wilson_dev_url()
+local function wilson_red_dev_url()
     ret = vim.fn.py3eval(string.format(
         [[vim_get_connection_str('%s', '%s', '%s', %d, '%s')]],
         "eu-central-1",
@@ -18,11 +20,26 @@ local function wilson_dev_url()
     return ret
 end
 
+local function wilson_pg_dev_url()
+    ret = vim.fn.py3eval(string.format(
+        [[vim_get_connection_str_from_sm('%s', '%s')]],
+        "eu-central-1",
+        "/dev/wilson/DATABASES_RO"
+    ))
+    return ret
+end
+
 vim.g.dbs = {
     {
-        name = 'DB1',
+        name = '[Dev]Wilson-Red',
         url = function()
-            return wilson_dev_url()
+            return wilson_red_dev_url()
+        end
+    },
+    {
+        name = '[Dev]Wilson-PG',
+        url = function()
+            return wilson_pg_dev_url()
         end
     }
 }
