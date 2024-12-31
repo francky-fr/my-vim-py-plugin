@@ -19,5 +19,4 @@ def get_iam_connection_str_from_sm(region, sm_path):
     secret_manager = boto3.client('secretsmanager', region_name=region)
     secret_resp = secret_manager.get_secret_value(SecretId=sm_path)
     creds_dict = json.loads(secret_resp['SecretString'])['default']
-    print(creds_dict)
     return get_connection_str(creds_dict['USER'], creds_dict['PASSWORD'], creds_dict['HOST'], creds_dict['PORT'], creds_dict['NAME'])

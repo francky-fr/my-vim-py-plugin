@@ -66,3 +66,10 @@ vim.api.nvim_exec([[
 ]], false)
 
 vim.keymap.set("n", "<C-r>", ":Lazy reload vim-dadbod-ui<CR>", { noremap = true, silent = true, desc = "Reload vim-dadbod-ui" })
+
+-- For query Execution
+vim.keymap.set('n', '<C-e>', ":%DB<CR>", { noremap = true, silent = true })
+vim.keymap.set('x', '<C-e>', 'db#op_exec()', { expr = true })
+
+-- Redshift Compat
+vim.g.db_ui_use_postgres_views = 0

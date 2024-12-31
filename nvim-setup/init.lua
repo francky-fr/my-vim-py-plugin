@@ -13,65 +13,73 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 
-    -- Fix JSON
-    { "rhysd/vim-fixjson", ft = { "json" } },
-    { "pseewald/vim-anyfold", ft = { "json" } },
+	-- Fix JSON
+	{ "rhysd/vim-fixjson", ft = { "json" } },
+	{ "pseewald/vim-anyfold", ft = { "json" } },
 
-    -- Dadbod
-    {
-	    "kristijanhusak/vim-dadbod-ui",
-	    cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
-	    dependencies = {
-		    {
-			    "tpope/vim-dadbod",
-			    lazy = true,
-		    },
-		    {
-			    "kristijanhusak/vim-dadbod-completion",
-			    lazy = true,
-		    },
-	    },
-	    config = function()
-		    require("dadbod-setup")
-	    end,
-    },
+	-- Dadbod
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
+		dependencies = {
+			{
+				"tpope/vim-dadbod",
+				lazy = true,
+			},
+			{
+				"kristijanhusak/vim-dadbod-completion",
+				lazy = true,
+			},
+		},
+		config = function()
+			require("dadbod-setup")
+		end,
+	},
 
-    -- LSP and completion
-    "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
+	-- LSP and completion
+	"neovim/nvim-lspconfig",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+	"hrsh7th/nvim-cmp",
+	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
 
-    -- Miscellaneous
-    "numToStr/Comment.nvim",
-    { "linux-cultist/venv-selector.nvim", version = "*" },
+	-- Miscellaneous
+	"numToStr/Comment.nvim",
+	{ "linux-cultist/venv-selector.nvim", version = "*" },
 
-    -- Telescope
-    "nvim-telescope/telescope.nvim",
-    "nvim-lua/popup.nvim",
-    "nvim-lua/plenary.nvim",
+	-- Telescope
+	"nvim-telescope/telescope.nvim",
+	"nvim-lua/popup.nvim",
+	"nvim-lua/plenary.nvim",
 
-    -- Colorschemes
-    "folke/tokyonight.nvim",
-    -- "ellisonleao/gruvbox.nvim",
-    -- "navarasu/onedark.nvim",
-    -- { "catppuccin/nvim", name = "catppuccin" },
-    -- "shaunsingh/nord.nvim",
-    -- "sainnhe/everforest",
-    
-    -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
+	-- Colorschemes
+	"folke/tokyonight.nvim",
+	-- "ellisonleao/gruvbox.nvim",
+	-- "navarasu/onedark.nvim",
+	-- { "catppuccin/nvim", name = "catppuccin" },
+	-- "shaunsingh/nord.nvim",
+	-- "sainnhe/everforest",
 
-    "folke/lazy.nvim",
+	-- Treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+	},
 
-    "dstein64/vim-startuptime"
+	-- Windows
+	{
+		"mrjones2014/smart-splits.nvim",
+		config = function()
+			require("smart-splits-setup")
+		end,
+	},
+
+	"folke/lazy.nvim",
+
+	"dstein64/vim-startuptime"
 })
 
 -- Setup git-path with the associated Python environment
