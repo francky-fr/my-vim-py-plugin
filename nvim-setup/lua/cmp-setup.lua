@@ -111,6 +111,7 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'vsnip' },
         { name = 'path' },
+        { name = "vim-dadbod-completion" },
     }, {
         { name = 'buffer' },
     }),
@@ -145,4 +146,3 @@ cmp.setup.cmdline('/', {
         completeopt = 'menu,menuone,noinsert,noselect',
     },
 })
-
