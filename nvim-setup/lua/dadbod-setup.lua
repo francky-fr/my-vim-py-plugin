@@ -69,5 +69,8 @@ vim.keymap.set('n', '<C-e>', ":%DB<CR>", { noremap = true, silent = true })
 vim.keymap.set('x', '<C-e>', 'db#op_exec()', { expr = true })
 vim.keymap.set('n', 'ee', ":.DB<CR>", { noremap = true, silent = true })
 
+-- Refresh
+vim.api.nvim_set_keymap('n', '<C-d>', '<Plug>(DBUI_Redraw)', { noremap = true, silent = true })
+
 -- Redshift Compat
 vim.g.db_ui_use_postgres_views = 0
