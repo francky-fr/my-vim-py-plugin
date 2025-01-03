@@ -29,7 +29,7 @@ require("lazy").setup({
 			{
 				"kristijanhusak/vim-dadbod-completion",
 				lazy = true,
-			},
+			}
 		},
 		config = function()
 			require("dadbod-setup")
