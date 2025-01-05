@@ -20,7 +20,7 @@ require("lazy").setup({
 	-- Dadbod
 	{
 		"kristijanhusak/vim-dadbod-ui",
-		cmd = { "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
+		cmd = { "DB", "DBUI", "DBUIToggle", "DBUIFindBuffer", "DBUIRenameBuffer" },
 		dependencies = {
 			{
 				"tpope/vim-dadbod",
