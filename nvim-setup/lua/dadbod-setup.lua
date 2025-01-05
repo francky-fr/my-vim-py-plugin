@@ -5,12 +5,27 @@ def vim_get_connection_str(region, host, workgroup, port, db):
     return dadbod.get_iam_connection_str(region, host, workgroup, port, db)
 def vim_get_connection_str_from_sm(region, sm_path):
     return dadbod.get_iam_connection_str_from_sm(region, sm_path)
+def vim_get_connection_str_from_sso(profile, region, host, workgroup, port, db):
+    return dadbod.get_sso_connection_str(profile, region, host, workgroup, port, db)
 EOF
 ]])
 
-local function wilson_red_dev_url()
+local function wilson_red_franck_dev_url()
     ret = vim.fn.py3eval(string.format(
         [[vim_get_connection_str('%s', '%s', '%s', %d, '%s')]],
+        "eu-central-1",
+        "wilson-dev.891239948857.eu-central-1.redshift-serverless.amazonaws.com",
+        "wilson-dev",
+        5439,
+        "dev"
+    ))
+    return ret
+end
+
+local function wilson_red_narbonne_dev_url()
+    ret = vim.fn.py3eval(string.format(
+        [[vim_get_connection_str_from_sso('%s', '%s', '%s', %d, '%s')]],
+	"narbonne_fc",
         "eu-central-1",
         "wilson-dev.891239948857.eu-central-1.redshift-serverless.amazonaws.com",
         "wilson-dev",
@@ -31,9 +46,15 @@ end
 
 vim.g.dbs = {
     {
-        name = '(DB1)Wilson-Red',
+        name = '(Dev)franck@Wilson-Red',
         url = function()
-            return wilson_red_dev_url()
+            return wilson_red_franck_dev_url()
+        end
+    },
+    {
+        name = '(Dev)narbonne_fc@Wilson-Red',
+        url = function()
+            return wilson_red_narbonne_dev_url()
         end
     },
     {
