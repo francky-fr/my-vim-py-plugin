@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import SSOTokenLoadError 
+from botocore.exceptions import SSOTokenLoadError, UnauthorizedSSOTokenError
 import urllib
 import json
 from py.sso import aws_sso_login
@@ -32,7 +32,7 @@ def get_sso_connection_str(profile_name, region, host, workgroup, port, db):
     redshift = session.client('redshift-serverless', region_name=region)
     try:
         creds_dict = redshift.get_credentials(dbName=db, workgroupName=workgroup)
-    except SSOTokenLoadError:
+    except (SSOTokenLoadError, UnauthorizedSSOTokenError):
         logging.info('SSO not authent yet, calling aws sso login ...')
         aws_sso_login(profile_name)
         creds_dict = redshift.get_credentials(dbName=db, workgroupName=workgroup)

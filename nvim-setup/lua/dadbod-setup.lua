@@ -48,24 +48,24 @@ local function wilson_pg_dev_url()
 end
 
 vim.g.dbs = {
-    -- {
-    --     name = '(Dev)franck@Wilson-Red',
-    --     url = function()
-    --         return wilson_red_franck_dev_url()
-    --     end
-    -- },
-    -- {
-    --     name = '(Dev)narbonne_fc@Wilson-Red',
-    --     url = function()
-    --         return wilson_red_narbonne_dev_url()
-    --     end
-    -- },
-    {
-        name = '(Dev)Wilson-PG',
-        url = function()
-            return wilson_pg_dev_url()
-        end
-    }
+     {
+	 name = '(Dev)franck@Wilson-Red',
+	 url = function()
+	     return wilson_red_franck_dev_url()
+	 end
+     },
+     {
+	 name = '(Dev)narbonne_fc@Wilson-Red',
+	 url = function()
+	     return wilson_red_narbonne_dev_url()
+	 end
+     },
+     {
+	 name = '(Dev)Wilson-PG',
+	 url = function()
+	    return wilson_pg_dev_url()
+	 end
+     }
 }
 vim.g.db_ui_execute_on_save = 0
 vim.g.db_ui_save_location = "~/queries/"
