@@ -54,12 +54,12 @@ vim.g.dbs = {
 	     return wilson_red_franck_dev_url()
 	 end
      },
-     {
-	 name = '(Dev)narbonne_fc@Wilson-Red',
-	 url = function()
-	     return wilson_red_narbonne_dev_url()
-	 end
-     },
+     --{
+	 --name = '(Dev)narbonne_fc@Wilson-Red',
+	 --url = function()
+	     --return wilson_red_narbonne_dev_url()
+	 --end
+     --},
      {
 	 name = '(Dev)Wilson-PG',
 	 url = function()
