@@ -77,6 +77,26 @@ function _G.map_ctrl_s_for_save_query()
   end
 end
 
+-- Refresh connections
+function _G.db_refresh_all()
+  local dbs = vim.g.dbs or {}
+
+  for _, db in ipairs(dbs) do
+    if type(db.url) == "function" then
+      local ok, dsn = pcall(db.url)
+      if ok and dsn then
+        vim.cmd("DB " .. dsn)
+        vim.notify("Refreshed creds for " .. db.name, vim.log.levels.INFO)
+      else
+        vim.notify("Failed to get DSN for " .. (db.name or "?"), vim.log.levels.ERROR)
+      end
+    end
+  end
+end
+
+
+vim.keymap.set("n", "<C-k>", function() db_refresh_all() end, { noremap = true, silent = true })
+
 -- Autocommand to apply the mapping only in SQL buffers
 vim.api.nvim_exec([[
   augroup DBUIMapCtrlS
