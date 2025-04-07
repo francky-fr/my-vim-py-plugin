@@ -2,7 +2,10 @@ import boto3
 from botocore.exceptions import SSOTokenLoadError, UnauthorizedSSOTokenError
 import urllib
 import json
-from sso import aws_sso_login
+try:
+    from .sso import aws_sso_login
+except ImportError:
+    from sso import aws_sso_login
 import logging
 
 logging.getLogger(__name__)

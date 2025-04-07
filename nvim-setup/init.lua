@@ -11,6 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Setup git-path with the associated Python environment
+local vim_setup_path = vim.fn.stdpath('config')
+vim.env.PYTHONPATH = vim_setup_path .. '/py:' .. (vim.env.PYTHONPATH or '')
+vim.g.python3_host_prog = vim_setup_path .. "/.venv/bin/python3"
+
 require("lazy").setup({
 
 	-- Fix JSON
@@ -31,6 +36,9 @@ require("lazy").setup({
 				lazy = true,
 			}
 		},
+		init = function()
+			require("dadbod-dbs").setup_dbs()
+		end,
 		build = function()
 			require("patch_dadbod_ui").patch_query_buffer()
 		end,
@@ -84,11 +92,6 @@ require("lazy").setup({
 
 	"dstein64/vim-startuptime"
 })
-
--- Setup git-path with the associated Python environment
-local vim_setup_path = vim.fn.stdpath('config')
-vim.env.PYTHONPATH = vim_setup_path .. '/py:' .. (vim.env.PYTHONPATH or '')
-vim.g.python3_host_prog = vim_setup_path .. "/.venv/bin/python3"
 
 -- Setup per module
 require('cmp-setup')

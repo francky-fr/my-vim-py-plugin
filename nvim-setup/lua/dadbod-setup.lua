@@ -1,72 +1,3 @@
-vim.cmd([[
-py3 << EOF
-import dadbod
-def vim_get_connection_str(region, host, workgroup, port, db):
-    return dadbod.get_iam_connection_str(region, host, workgroup, port, db)
-def vim_get_connection_str_from_sm(region, sm_path):
-    return dadbod.get_iam_connection_str_from_sm(region, sm_path)
-def vim_get_connection_str_from_sso(profile, region, host, workgroup, port, db):
-    return dadbod.get_sso_connection_str(profile, region, host, workgroup, port, db)
-EOF
-]])
-
-vim.g.db_verbose = 1
-
-
-local function wilson_red_franck_dev_url()
-    ret = vim.fn.py3eval(string.format(
-        [[vim_get_connection_str('%s', '%s', '%s', %d, '%s')]],
-        "eu-central-1",
-        "wilson-dev.891239948857.eu-central-1.redshift-serverless.amazonaws.com",
-        "wilson-dev",
-        5439,
-        "dev"
-    ))
-    return ret
-end
-
-local function wilson_red_narbonne_dev_url()
-    ret = vim.fn.py3eval(string.format(
-        [[vim_get_connection_str_from_sso('%s', '%s', '%s', '%s', %d, '%s')]],
-	"narbonne_fc",
-        "eu-central-1",
-        "wilson-dev.891239948857.eu-central-1.redshift-serverless.amazonaws.com",
-        "wilson-dev",
-        5439,
-        "dev"
-    ))
-    return ret
-end
-
-local function wilson_pg_dev_url()
-    ret = vim.fn.py3eval(string.format(
-        [[vim_get_connection_str_from_sm('%s', '%s')]],
-        "eu-central-1",
-        "/dev/wilson/DATABASES"
-    ))
-    return ret
-end
-
-vim.g.dbs = {
-     {
-	 name = '(Dev)franck@Wilson-Red',
-	 url = function()
-	     return wilson_red_franck_dev_url()
-	 end
-     },
-     --{
-	 --name = '(Dev)narbonne_fc@Wilson-Red',
-	 --url = function()
-	     --return wilson_red_narbonne_dev_url()
-	 --end
-     --},
-     {
-	 name = '(Dev)Wilson-PG',
-	 url = function()
-	    return wilson_pg_dev_url()
-	 end
-     }
-}
 vim.g.db_ui_execute_on_save = 0
 vim.g.db_ui_save_location = "~/queries/"
 
@@ -77,27 +8,6 @@ function _G.map_ctrl_s_for_save_query()
   end
 end
 
--- Refresh connections
-function _G.db_refresh_all()
-  local dbs = vim.g.dbs or {}
-
-  for _, db in ipairs(dbs) do
-    if type(db.url) == "function" then
-      local ok, dsn = pcall(db.url)
-      if ok and dsn then
-        vim.cmd("DB " .. dsn)
-        vim.notify("Refreshed creds for " .. db.name, vim.log.levels.INFO)
-      else
-        vim.notify("Failed to get DSN for " .. (db.name or "?"), vim.log.levels.ERROR)
-      end
-    end
-  end
-end
-
-
-vim.keymap.set("n", "<C-k>", function() db_refresh_all() end, { noremap = true, silent = true })
-
--- Autocommand to apply the mapping only in SQL buffers
 vim.api.nvim_exec([[
   augroup DBUIMapCtrlS
     autocmd!
@@ -106,7 +16,8 @@ vim.api.nvim_exec([[
 ]], false)
 
 
-vim.keymap.set("n", "<C-r>", ":Lazy reload vim-dadbod-ui<CR>", { noremap = true, silent = true, desc = "Reload vim-dadbod-ui" })
+vim.keymap.set("n", "<C-r>", db_refresh_all, { noremap = true, silent = true })
+
 
 -- For query Execution
 vim.keymap.set('n', '<C-e>', ":%DB<CR>", { noremap = true, silent = true })
