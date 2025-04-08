@@ -11,6 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.mapleader = " "
+
 -- Setup git-path with the associated Python environment
 local vim_setup_path = vim.fn.stdpath('config')
 vim.env.PYTHONPATH = vim_setup_path .. '/py:' .. (vim.env.PYTHONPATH or '')
@@ -90,7 +92,11 @@ require("lazy").setup({
 
 	"folke/lazy.nvim",
 
-	"dstein64/vim-startuptime"
+	"dstein64/vim-startuptime",
+
+	-- emojis
+	"nvim-telescope/telescope-symbols.nvim",
+	"xiyaowong/telescope-emoji.nvim"
 })
 
 -- Setup per module
@@ -102,10 +108,14 @@ require('color-setup')
 require('my-smart-move')
 
 vim.opt.mouse = "a"
-vim.g.mapleader = " "
 
 -- Leader key mappings in Lua
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 map('n', '<leader>q', ':q<CR>', opts)
+
+vim.keymap.set("i", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
+vim.keymap.set("i", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })
+vim.keymap.set("n", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
+vim.keymap.set("n", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })

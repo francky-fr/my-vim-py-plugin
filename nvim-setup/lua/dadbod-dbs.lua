@@ -93,7 +93,7 @@ function M.setup_dbs()
 
   if vim.fn.getenv("WITH_ADMIN_DB") == "1" then
     for _, db in ipairs(admin_dbs) do
-      local name = db.name
+      local name = '🔴' .. db.name
       local url = type(db.url) == "function" and db.url() or db.url
       if type(name) == "string" and type(url) == "string" then
         dbs[name] = url
