@@ -38,13 +38,11 @@ require("lazy").setup({
 				lazy = true,
 			}
 		},
-		init = function()
-			require("dadbod-dbs").setup_dbs()
-		end,
 		build = function()
 			require("patch_dadbod_ui").patch_query_buffer()
 		end,
 		config = function()
+			require("dadbod-dbs").setup_dbs()
 			require("dadbod-setup")
 		end,
 	},
