@@ -16,6 +16,7 @@ vim.api.nvim_exec([[
 ]], false)
 
 
+vim.keymap.set("n", "<C-y>", '<Plug>(DBUI_Redraw)' , { noremap = true, silent = true })
 vim.keymap.set("n", "<C-r>", db_refresh_all, { noremap = true, silent = true })
 
 
