@@ -60,6 +60,16 @@ local function wilson_pg_dev_url()
     return ret
 end
 
+local function airbyte_workload_pg_url()
+    ret = vim.fn.py3eval(string.format(
+	[[vim_get_connection_str_from_sm('%s', '%s')]],
+	"eu-central-1",
+	"airbyte_db_user"
+    ))
+    return ret
+end
+
+
 local M = {}
 
 local base_dbs = {
@@ -77,6 +87,10 @@ local admin_dbs = {
   {
     name = '(Dev)admin@Wilson-Red',
     url = function() return wilson_red_admin_dev_url() end
+  },
+  {
+    name = 'airbyte_admin@airbyte-workload',
+    url = function() return airbyte_workload_pg_url() end
   }
 }
 

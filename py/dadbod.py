@@ -27,8 +27,15 @@ def get_iam_connection_str(region, host, workgroup, port, db):
 def get_iam_connection_str_from_sm(region, sm_path):
     secret_manager = boto3.client('secretsmanager', region_name=region)
     secret_resp = secret_manager.get_secret_value(SecretId=sm_path)
-    creds_dict = json.loads(secret_resp['SecretString'])['default']
-    return get_connection_str(creds_dict['USER'], creds_dict['PASSWORD'], creds_dict['HOST'], creds_dict['PORT'], creds_dict['NAME'])
+    creds_dict = json.loads(secret_resp['SecretString'])
+    if 'default' in creds_dict:
+        # assuming Wilson format
+        creds_dict = json.loads(secret_resp['SecretString'])['default']
+        args = creds_dict['USER'], creds_dict['PASSWORD'], creds_dict['HOST'], creds_dict['PORT'], creds_dict['NAME']
+    else:
+        # assuming airbyte format
+        args = creds_dict['DATABASE_USER'], creds_dict['DATABASE_PASSWORD'], creds_dict['HOST'], creds_dict['PORT'], creds_dict['NAME']
+    return get_connection_str(*args)
 
 def get_sso_connection_str(profile_name, region, host, workgroup, port, db):
     session = boto3.Session(profile_name=profile_name)

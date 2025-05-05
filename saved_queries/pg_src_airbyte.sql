@@ -16,3 +16,8 @@ CREATE PUBLICATION airbyte_publication FOR TABLE api_player;
 -- Monitoring
 SELECT * FROM pg_replication_slots WHERE slot_name = 'airbyte_slot';
 
+SHOW wal_keep_size
+SHOW  max_slot_wal_keep_size
+SELECT pg_current_wal_lsn();
+
+SELECT pg_walfile_name(pg_current_wal_lsn());
