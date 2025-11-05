@@ -5,3 +5,6 @@ GRANT usage, create on SCHEMA public TO airbyte;
 GRANT SELECT ON TABLE SVV_TABLE_INFO TO airbyte;
 
 SELECT  current_database()
+
+SHOW rds.logical_wal_cache;
+

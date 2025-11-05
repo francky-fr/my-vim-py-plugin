@@ -13,10 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 
--- Setup git-path with the associated Python environment
-local vim_setup_path = vim.fn.stdpath('config')
-vim.env.PYTHONPATH = vim_setup_path .. '/py:' .. (vim.env.PYTHONPATH or '')
-vim.g.python3_host_prog = vim_setup_path .. "/.venv/bin/python3"
 
 require("lazy").setup({
 
@@ -56,6 +52,11 @@ require("lazy").setup({
 	"hrsh7th/nvim-cmp",
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
+	{
+		"mtoohey31/cmp-fish",
+		ft = "fish",
+	},
+
 
 	-- Miscellaneous
 	"numToStr/Comment.nvim",
@@ -78,6 +79,9 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		opts = {
+			ensure_installed = { "fish", "yaml" }
+		}
 	},
 
 	-- Windows
@@ -94,7 +98,59 @@ require("lazy").setup({
 
 	-- emojis
 	"nvim-telescope/telescope-symbols.nvim",
-	"xiyaowong/telescope-emoji.nvim"
+	"xiyaowong/telescope-emoji.nvim",
+
+	-- llm
+	-- {
+	-- 	"olimorris/codecompanion.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	config = function()
+	-- 		require("codecompanion").setup()
+	-- 	end,
+	-- }
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			-- on force l'adapter OpenAI-compatible pointé sur LiteLLM
+			adapters = {
+				bedrock_openai = function()
+					return require("codecompanion.adapters").extend("openai_compatible", {
+						env = {
+							url = "http://127.0.0.1:4000",  -- LiteLLM proxy
+							api_key = "dummy",              -- requis par le schéma OpenAI; valeur quelconque
+						},
+						headers = {
+							["Authorization"] = "Bearer ${api_key}",
+							["Content-Type"] = "application/json",
+						},
+						-- modèle "virtuel" vu par LiteLLM (nom côté model_list)
+						schema = {
+							model = { default = "opus-41" },
+						},
+					})
+				end,
+				opts = {
+					-- Optionnel: ne montrer que tes adapters custom dans l'UI
+					show_defaults = false,
+					show_model_choices = false,
+				},
+			},
+			strategies = {
+				chat =   { adapter = "bedrock_openai" },
+				inline = { adapter = "bedrock_openai" },
+				cmd =    { adapter = "bedrock_openai" },
+			},
+			-- Debug utile si souci:
+			opts = { log_level = "INFO" }, -- "DEBUG" pour plus de détails
+		},
+	}
 })
 
 -- Setup per module
@@ -113,7 +169,7 @@ local opts = { noremap = true, silent = true }
 
 map('n', '<leader>q', ':q<CR>', opts)
 
-vim.keymap.set("i", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
-vim.keymap.set("i", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })
-vim.keymap.set("n", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
-vim.keymap.set("n", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })
+--vim.keymap.set("i", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
+--vim.keymap.set("i", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })
+--vim.keymap.set("n", "<leader>e", "<Cmd>Telescope emoji<CR>", { desc = "Insert emoji" })
+--vim.keymap.set("n", "<leader>s", "<Cmd>Telescope symbols<CR>", { desc = "Insert emoji" })

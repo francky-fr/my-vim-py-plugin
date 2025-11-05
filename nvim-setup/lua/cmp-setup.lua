@@ -112,6 +112,7 @@ cmp.setup({
         { name = 'vsnip' },
         { name = 'path' },
         { name = "vim-dadbod-completion" },
+	{ name = "fish"},
     }, {
         { name = 'buffer' },
     }),

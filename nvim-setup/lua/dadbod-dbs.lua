@@ -1,3 +1,7 @@
+local vim_setup_path = vim.fn.stdpath('config')
+vim.env.PYTHONPATH = vim_setup_path .. '/py:' .. (vim.env.PYTHONPATH or '')
+vim.g.python3_host_prog = vim_setup_path .. "/.venv/bin/python3"
+
 vim.cmd([[
 py3 << EOF
 import dadbod
